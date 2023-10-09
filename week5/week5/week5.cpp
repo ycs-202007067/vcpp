@@ -7,23 +7,23 @@
 #include <windows.h>
 // 윈도우의 이벤트를 처리하는 콜백(Callback) 함수.
 
-HINSTANCE hInst;
-HWND hWnd;
+HINSTANCE hInst; // 응용 프로그램의 인스턴스 핸들을 저장
+HWND hWnd; // 윈도우 창의 핸들
 RECT drawingRect = { 0, 0, 0, 0 }; // 그려질 사각형의 위치 및 크기
 RECT movingRect = { 0, 0, 0, 0 };  // 이동 가능한 사각형의 위치 및 크기
-bool isDrawing = false;
-bool isMoving = false;
-POINT startPoint;
-POINT offset;
+bool isDrawing = false; // 현재 그리기 모드인지 여부
+bool isMoving = false; // 현재 이동 모드인지 여부
+POINT startPoint; // 마우스 드래그를 시작한 지점의 좌표를 저장
+POINT offset; // 이동 중인 사각형의 현재 위치와 이전 위치 간의 차이를 저장
 // 전역 변수
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 // 윈도우 프로시저 함수
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) // 윈도우 이벤트를 처리
 {
     switch (message)
     {
-    case WM_PAINT:
+    case WM_PAINT: 
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
@@ -42,7 +42,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         EndPaint(hWnd, &ps);
         break;
     }
-    case WM_LBUTTONDOWN:
+    case WM_LBUTTONDOWN: 
     {
         // 마우스 왼쪽 버튼 누를 때
         startPoint.x = LOWORD(lParam);
