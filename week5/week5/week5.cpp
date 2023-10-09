@@ -1,67 +1,115 @@
-﻿#ifdef _DEBUG_   
-#ifdef UNICODE
+﻿#ifdef UNICODE
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 #else
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #endif
-#endif
+
 #include <windows.h>
 // 윈도우의 이벤트를 처리하는 콜백(Callback) 함수.
-bool isDragging = false; //드래그중인지 여부를 나타내는 전역변수
-RECT rect = { 0,0,0,0 }; // 사각형의 좌표를 나타내는 전역변수
-HBRUSH hBrush; // 분홍색 브러쉬 핸들
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+
+HINSTANCE hInst;
+HWND hWnd;
+RECT drawingRect = { 0, 0, 0, 0 }; // 그려질 사각형의 위치 및 크기
+RECT movingRect = { 0, 0, 0, 0 };  // 이동 가능한 사각형의 위치 및 크기
+bool isDrawing = false;
+bool isMoving = false;
+POINT startPoint;
+POINT offset;
+// 전역 변수
+
+LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+// 윈도우 프로시저 함수
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    switch (uMsg)
+    switch (message)
     {
-
-    case WM_CREATE:
-        hBrush = CreateSolidBrush(RGB(255, 0, 255)); // 핑크 브러시 생성
-        break;
-
-    case WM_LBUTTONDOWN:
-        // 마우스 왼쪽 버튼이 눌린 경우
-        isDragging = true;
-        rect.left = LOWORD(lParam);
-        rect.top = HIWORD(lParam);
-        rect.right = rect.left;
-        rect.bottom = rect.top;
-        break;
-
-    case WM_MOUSEMOVE:
-        // 마우스 이동 중인 경우
-        if (isDragging) {
-            // 이전에 그렸던 사각형을 지우기 위해 InvalidateRect 호출
-            InvalidateRect(hwnd, &rect, TRUE);
-            rect.right = LOWORD(lParam);
-            rect.bottom = HIWORD(lParam);
-            // 새로운 사각형을 그리기 위해 다시 그림
-            InvalidateRect(hwnd, &rect, TRUE);
-        }
-        break;
-
-    case WM_LBUTTONUP:
-        // 마우스 왼쪽 버튼이 놓여진 경우
-        isDragging = false;
-        break;
-
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hwnd, &ps);
-        SelectObject(hdc, hBrush); // 브러시 선택
-        Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-        EndPaint(hwnd, &ps);
-    }
-    break;
+        HDC hdc = BeginPaint(hWnd, &ps);
 
+        // 이전에 그려진 사각형을 지우기
+        FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+
+        // 그려진 사각형 그리기
+        if (!isDrawing)
+        {
+            HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 255));
+            FillRect(hdc, &drawingRect, hBrush);
+            DeleteObject(hBrush);
+        }
+
+        EndPaint(hWnd, &ps);
+        break;
+    }
+    case WM_LBUTTONDOWN:
+    {
+        // 마우스 왼쪽 버튼 누를 때
+        startPoint.x = LOWORD(lParam);
+        startPoint.y = HIWORD(lParam);
+        isDrawing = true;
+        isMoving = false;
+        break;
+    }
+    case WM_LBUTTONUP:
+    {
+        // 마우스 왼쪽 버튼 놓을 때
+        if (isDrawing)
+        {
+            isDrawing = false;
+            RECT rect;
+            rect.left = startPoint.x;
+            rect.top = startPoint.y;
+            rect.right = LOWORD(lParam);
+            rect.bottom = HIWORD(lParam);
+            drawingRect = rect;
+            InvalidateRect(hWnd, NULL, TRUE);
+        }
+        break;
+    }
+    case WM_RBUTTONDOWN:
+    {
+        // 마우스 오른쪽 버튼 누를 때
+        startPoint.x = LOWORD(lParam);
+        startPoint.y = HIWORD(lParam);
+        if (PtInRect(&drawingRect, startPoint))
+        {
+            isMoving = true;
+            offset.x = startPoint.x - drawingRect.left;
+            offset.y = startPoint.y - drawingRect.top;
+        }
+        break;
+    }
+    case WM_RBUTTONUP:
+    {
+        // 마우스 오른쪽 버튼 놓을 때
+        isMoving = false;
+        break;
+    }
+    case WM_MOUSEMOVE:
+    {
+        // 마우스 이동 시
+        if (isMoving)
+        {
+            int newX = LOWORD(lParam) - offset.x;
+            int newY = HIWORD(lParam) - offset.y;
+            RECT newRect;
+            newRect.left = newX;
+            newRect.top = newY;
+            newRect.right = newX + (drawingRect.right - drawingRect.left);
+            newRect.bottom = newY + (drawingRect.bottom - drawingRect.top);
+            drawingRect = newRect;
+            InvalidateRect(hWnd, NULL, TRUE);
+        }
+        break;
+    }
     case WM_DESTROY:
-        DeleteObject(hBrush); // 브러시 삭제
+    {
         PostQuitMessage(0);
         break;
+    }
     default:
-
-        return DefWindowProc(hwnd, uMsg, wParam, lParam);
+        return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return S_OK;
 }
