@@ -1,8 +1,8 @@
-﻿#ifdef UNICODE
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-#else
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-#endif
+﻿//#ifdef UNICODE
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+//#else
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#endif
 
 #include <windows.h>
 
@@ -61,24 +61,36 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_PAINT:
-
 	{
-
 		if (isKeyPressed)
 		{
-			FillRect(hdc, &rect_user, hBrush_user);
+			// Fill rect_target first
 			FillRect(hdc, &rect_target, hBrush_target);
-		}
 
+			// Fill rect_user with blue color
+			FillRect(hdc, &rect_user, hBrush_user);
+		}
 		else
 		{
 			RECT intersection;
 			if (IntersectRect(&intersection, &rect_user, &rect_target)) {
+				// Fill rect_target first
+				FillRect(hdc, &rect_target, hBrush_target);
+
+				// Fill rect_user with blue color
+				FillRect(hdc, &rect_user, hBrush_user);
+
+				// Draw the "Crash!!!" text
 				TextOut(hdc, 10, 10, text, lstrlen(text));
 			}
+			else
+			{
+				// Fill rect_user with eraser color
+				FillRect(hdc, &rect_user, hBrush_eraser);
 
-			FillRect(hdc, &rect_user, hBrush_eraser);
-			FillRect(hdc, &rect_target, hBrush_target);
+				// Fill rect_target
+				FillRect(hdc, &rect_target, hBrush_target);
+			}
 		}
 	}
 	break;
