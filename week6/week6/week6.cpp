@@ -29,29 +29,29 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		isKeyPressed = 1;
 		if (wParam == VK_RIGHT)
 		{
-			rect_user.left += 5;
-			rect_user.right += 5;
+			rect_user.left += 1;
+			rect_user.right += 1;
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
 
 		else if (wParam == VK_LEFT)
 		{
-			rect_user.left -= 5;
-			rect_user.right -= 5;
+			rect_user.left -= 1;
+			rect_user.right -= 1;
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
 
 		else if (wParam == VK_DOWN)
 		{
-			rect_user.top += 5;
-			rect_user.bottom += 5;
+			rect_user.top += 1;
+			rect_user.bottom += 1;
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
 
 		else if (wParam == VK_UP)
 		{
-			rect_user.top -= 5;
-			rect_user.bottom -= 5;
+			rect_user.top -= 1;
+			rect_user.bottom -= 1;
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
 		break;
@@ -149,7 +149,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// 윈도우 생성
 	HWND hwnd = CreateWindow(
 		wc.lpszClassName,
-		TEXT("컴소 Application"),
+		TEXT("202007067 문현민"),
 		WS_OVERLAPPEDWINDOW,
 		0, 0,
 		width, height,
