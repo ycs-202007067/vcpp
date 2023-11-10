@@ -1,0 +1,40 @@
+﻿  yuhanCG.cpp
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(2,10): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(114,75): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(114,57): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(114,38): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(114,20): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(118,75): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(118,57): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(118,38): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(118,20): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(122,77): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(122,58): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(122,39): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(122,20): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(126,75): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(126,57): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(126,38): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(126,20): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(130,75): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(130,57): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(130,38): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(130,20): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(134,76): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(134,57): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(134,38): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(134,20): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(136,39): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(136,21): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(137,37): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(137,19): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(141,76): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(141,57): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(141,38): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(141,20): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(143,39): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(143,21): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(144,37): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ktx61\source\repos\MidtermExam\Ryan\yuhanCG.cpp(144,19): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+MSVCRTD.lib(exe_main.obj) : error LNK2019: _main"int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+C:\Users\ktx61\source\repos\MidtermExam\Debug\Ryan.exe : fatal error LNK1120: 1개의 확인할 수 없는 외부 참조입니다.
