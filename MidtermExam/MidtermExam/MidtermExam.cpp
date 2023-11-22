@@ -7,11 +7,16 @@ HWND hBox2, hBoxButton, hCircleButton, hBonobonoButton, hRyanButton, hCubeButton
 BOOL isMouseDragging = FALSE;
 BOOL isMouseOverBox2 = FALSE;
 BOOL isDrawingBox = FALSE;
+BOOL isDrawingCircle = FALSE;
 BOOL defaultBonobono = FALSE;
 BOOL spaceBonobono = FALSE;
 BOOL isSpacePressed = FALSE;
 BOOL isRyanMode = FALSE;
+BOOL isMoving = FALSE;
 int startX, startY, endX, endY;
+int prevMouseX, prevMouseY;
+// 마우스 우클릭을 시작한 지점의 좌표
+int startRightClickX = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
     WNDCLASSEX wc = { 0 };
@@ -110,6 +115,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 // 화면을 갱신하여 드래그 중인 사각형을 그립니다.
                 InvalidateRect(hwnd, NULL, TRUE);
             }
+            else if (isMoving) {
+                int deltaX = pt.x - prevMouseX;
+                int deltaY = pt.y - prevMouseY;
+
+                // 이동한 거리만큼 DrawBox의 위치를 조정합니다.
+                startX += deltaX;
+                startY += deltaY;
+                endX += deltaX;
+                endY += deltaY;
+
+                // 현재 마우스 위치로 이동 후, 다시 화면을 갱신하여 사각형을 그립니다.
+                prevMouseX = pt.x;
+                prevMouseY = pt.y;
+                InvalidateRect(hwnd, NULL, TRUE);
+            }
         }
         else {
             // 드로잉영역에서 마우스가 벗어났을 때 원래 커서로 변경
@@ -122,7 +142,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     }
 
     case WM_LBUTTONDOWN: {
-        if (isDrawingBox || isRyanMode) {
+        if (isDrawingBox || isDrawingCircle || isRyanMode) {
             startX = LOWORD(lParam);
             startY = HIWORD(lParam);
             endX = startX;
@@ -138,7 +158,29 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             isMouseDragging = FALSE;
             ReleaseCapture();
 
-            if (isRyanMode) {
+            if (isDrawingBox) {
+                int width = abs(endX - startX);
+                int height = abs(endY - startY);
+                int x = min(startX, endX);
+                int y = min(startY, endY);
+
+                HDC hdc = GetDC(hwnd);
+                DrawBox(hwnd, hdc, x, y, width, height);
+                ReleaseDC(hwnd, hdc);
+            }
+
+            else if (isDrawingCircle) {
+                int width = abs(endX - startX);
+                int height = abs(endY - startY);
+                int x = min(startX, endX);
+                int y = min(startY, endY);
+
+                HDC hdc = GetDC(hwnd);
+                DrawCircle(hwnd, hdc, x, y, width, height);
+                ReleaseDC(hwnd, hdc);
+            }
+
+            else if (isRyanMode) {
                 int width = abs(endX - startX);
                 int height = abs(endY - startY);
                 int x = min(startX, endX);
@@ -152,7 +194,30 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         return 0;
     }
 
+    case WM_RBUTTONDOWN: {
+        if (isDrawingBox) {
+            prevMouseX = LOWORD(lParam);
+            prevMouseY = HIWORD(lParam);
+            isMoving = TRUE;
+            SetCapture(hwnd);
+        }
+      
+        return 0;
+    }
 
+  case WM_RBUTTONUP: {
+      if (isDrawingBox) {
+          isMoving = FALSE;
+          ReleaseCapture();
+
+          // 이동한 위치에 사각형을 그리기
+          HDC hdc = GetDC(hwnd);
+          DrawBox(hwnd, hdc, startX, startY, endX - startX, endY - startY);
+          ReleaseDC(hwnd, hdc);
+      }
+     
+    return 0;
+}
 
     case WM_KEYDOWN: {
         if (wParam == VK_SPACE) {
@@ -190,6 +255,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         switch (LOWORD(wParam)) {
         case 1: // "Box" 버튼의 ID
             isDrawingBox = TRUE; // "Box" 버튼을 눌렀을 때 도형을 그릴 수 있도록 상태 변경
+            isDrawingCircle = FALSE;
             defaultBonobono = FALSE;
             spaceBonobono = FALSE;
             isRyanMode = FALSE;
@@ -198,6 +264,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             break;
         case 2: // "Circle" 버튼의 ID
             isDrawingBox = FALSE;
+            isDrawingCircle = TRUE;
             defaultBonobono = FALSE; // Bonobono 이미지를 그리지 않도록 설정
             spaceBonobono = FALSE;
             isRyanMode = FALSE;
@@ -207,6 +274,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             break;
         case 3: // "Bonobono" 버튼의 ID
             isDrawingBox = FALSE; // 다른 버튼을 눌렀을 때 도형을 그릴 수 없도록 상태 변경
+            isDrawingCircle = FALSE;
             if (isSpacePressed) {
                 defaultBonobono = FALSE;
                 spaceBonobono = TRUE;
@@ -221,6 +289,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             break;
         case 4: // "Ryan" 버튼의 ID
             isDrawingBox = FALSE;
+            isDrawingCircle = FALSE;
             defaultBonobono = FALSE; // Bonobono 이미지를 그리지 않도록 설정
             spaceBonobono = FALSE;
             isRyanMode = TRUE;
@@ -230,6 +299,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             break;
         case 5: // "Cube" 버튼의 ID
             isDrawingBox = FALSE;
+            isDrawingCircle = FALSE;
             defaultBonobono = FALSE; // Bonobono 이미지를 그리지 않도록 설정
             spaceBonobono = FALSE;
             isRyanMode = FALSE;
@@ -244,11 +314,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     case WM_PAINT: {
         PAINTSTRUCT ps;
         hdc = BeginPaint(hwnd, &ps);
-        if (defaultBonobono) {
-            DrawBonobono1(hwnd, hdc, 1);
+        if (isDrawingBox) {
+            DrawBox(hwnd, hdc, startX, startY, endX - startX, endY - startY);
         }
-        else if (spaceBonobono) {
-            DrawBonobono2(hwnd, hdc, 1);
+        else if (isDrawingCircle) {
+            DrawCircle(hwnd, hdc, startX, startY, endX - startX, endY - startY);
+        }
+        else {
+            if (defaultBonobono) {
+                DrawBonobono1(hwnd, hdc, 1);
+            }
+            else if (spaceBonobono) {
+                DrawBonobono2(hwnd, hdc, 1);
+            }
         }
         EndPaint(hwnd, &ps);
         return 0;
